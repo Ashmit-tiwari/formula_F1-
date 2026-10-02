@@ -11,13 +11,13 @@ if (!fs.existsSync(distDir)) {
   fs.mkdirSync(distDir, { recursive: true });
 }
 
+// Only use media folders that belong natively to 'anushka ka surprise'
 const itemsToCopy = [
   'photos_data.js',
   'script.js',
   'assets_manifest.json',
   'anushka cute pics',
   'anushka funny pics',
-  'anushka video',
   'message by akshaj',
   'message by ammar',
   'message by arnima',
@@ -38,4 +38,4 @@ itemsToCopy.forEach(item => {
   }
 });
 
-console.log('✓ All assets successfully copied to dist for production deployment!');
+console.log('✓ All authentic assets successfully copied to dist for production deployment!');
