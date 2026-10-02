@@ -171,40 +171,62 @@ function initGallery() {
   const filterBtns = document.querySelectorAll('.gallery-filter-btn');
   if (!grid) return;
 
-  const photos = (window.CUTE_PICS && window.CUTE_PICS.length > 0) ? window.CUTE_PICS : [];
-  
-  // Combine all cute & funny videos for rich gallery playback
-  const cuteVids = (window.CUTE_VIDEOS && window.CUTE_VIDEOS.length > 0) ? window.CUTE_VIDEOS : [];
-  const funnyVids = (window.FUNNY_VIDEOS && window.FUNNY_VIDEOS.length > 0) ? window.FUNNY_VIDEOS : [];
-  const allVids = [...cuteVids, ...funnyVids];
+  // Strict validator: only accepts non-empty strings with image/video extensions
+  function normalizeMediaList(list) {
+    if (!list) return [];
+    if (typeof list === 'string') list = [list];
+    if (!Array.isArray(list)) return [];
+    return list.filter(item => {
+      if (typeof item !== 'string') return false;
+      const trimmed = item.trim();
+      return /\.(jpe?g|png|webp|gif|mp4|webm|mov|m4v)$/i.test(trimmed);
+    });
+  }
+
+  const cutePhotos = normalizeMediaList(window.CUTE_PICS);
+  const funnyPhotos = normalizeMediaList(window.FUNNY_PICS);
+  const allPhotos = [...cutePhotos, ...funnyPhotos];
+
+  const cuteVideos = normalizeMediaList(window.CUTE_VIDEOS);
+  const funnyVideos = normalizeMediaList(window.FUNNY_VIDEOS);
+  const allVideos = [...cuteVideos, ...funnyVideos];
 
   allGalleryItems = [];
+  let photoIdx = 0;
+  let videoIdx = 0;
 
-  // Add photos to gallery pool
-  photos.forEach((src, idx) => {
-    const meta = DEFAULT_ANNOTATIONS[idx % DEFAULT_ANNOTATIONS.length];
-    allGalleryItems.push({
-      type: 'photo',
-      src: src,
-      tag: meta.tag,
-      pin: meta.pin,
-      caption: meta.caption,
-      icon: meta.icon
-    });
-  });
+  // Interleave photos and videos in a harmonious rhythm: 2 photos, 1 video, 2 photos, 1 video...
+  while (photoIdx < allPhotos.length || videoIdx < allVideos.length) {
+    // Add up to 2 photos
+    for (let p = 0; p < 2 && photoIdx < allPhotos.length; p++) {
+      const src = allPhotos[photoIdx];
+      const meta = DEFAULT_ANNOTATIONS[photoIdx % DEFAULT_ANNOTATIONS.length];
+      allGalleryItems.push({
+        type: 'photo',
+        src: src,
+        tag: meta.tag,
+        pin: meta.pin,
+        caption: meta.caption,
+        icon: meta.icon
+      });
+      photoIdx++;
+    }
 
-  // Interleave videos into gallery pool
-  allVids.forEach((vidSrc, idx) => {
-    const meta = VIDEO_ANNOTATIONS[idx % VIDEO_ANNOTATIONS.length];
-    allGalleryItems.push({
-      type: 'video',
-      src: vidSrc,
-      tag: meta.tag,
-      pin: meta.pin,
-      caption: meta.caption,
-      icon: meta.icon
-    });
-  });
+    // Add 1 video clip
+    if (videoIdx < allVideos.length) {
+      const src = allVideos[videoIdx];
+      const meta = VIDEO_ANNOTATIONS[videoIdx % VIDEO_ANNOTATIONS.length];
+      allGalleryItems.push({
+        type: 'video',
+        src: src,
+        tag: meta.tag,
+        pin: meta.pin,
+        caption: meta.caption,
+        icon: meta.icon
+      });
+      videoIdx++;
+    }
+  }
 
   renderGalleryGrid(grid, allGalleryItems, 'all');
 
@@ -271,6 +293,9 @@ function renderGalleryGrid(grid, items, filterType) {
         <video preload="metadata" muted playsinline style="width:100%; height:100%; object-fit:cover;">
           <source src="${encodeURI(item.src)}" type="video/mp4">
         </video>
+        <div class="video-play-overlay">
+          <span class="video-play-btn-circle">▶</span>
+        </div>
         <span class="video-time-tag">
           <span class="video-pulse-dot"></span>
           <span>VIDEO CLIP</span>
@@ -285,6 +310,30 @@ function renderGalleryGrid(grid, items, filterType) {
       <div class="polaroid-caption">${item.caption}</div>
       <span class="annotation-badge ${item.pin}">${item.tag}</span>
     `;
+
+    // Strict Error Fallback: if media cannot be loaded, remove empty card entirely
+    const mediaElem = card.querySelector('img, video');
+    if (mediaElem) {
+      mediaElem.addEventListener('error', () => {
+        card.remove();
+      });
+
+      // For video: hover live preview and seek to vivid frame
+      if (item.type === 'video' && mediaElem.tagName === 'VIDEO') {
+        mediaElem.addEventListener('loadedmetadata', () => {
+          mediaElem.currentTime = 0.5; // Seek past initial black frame
+        });
+
+        card.addEventListener('mouseenter', () => {
+          mediaElem.play().catch(() => {});
+        });
+
+        card.addEventListener('mouseleave', () => {
+          mediaElem.pause();
+          mediaElem.currentTime = 0.5;
+        });
+      }
+    }
 
     // Click to play/view in full lightbox
     card.addEventListener('click', () => {
@@ -311,6 +360,7 @@ function openSingleMediaModal(src, type, caption) {
     if (imgElem) imgElem.style.display = 'none';
     if (vidElem) {
       vidElem.style.display = 'block';
+      vidElem.controls = true;
       vidElem.src = encodeURI(src);
       vidElem.play().catch(() => {});
     }
@@ -319,6 +369,7 @@ function openSingleMediaModal(src, type, caption) {
     if (vidElem) {
       vidElem.pause();
       vidElem.style.display = 'none';
+      vidElem.src = '';
     }
     if (imgElem) {
       imgElem.style.display = 'block';
@@ -569,8 +620,15 @@ function renderChaosPhotos(container) {
   if (!container) return;
   container.innerHTML = '';
 
-  const photos = (window.FUNNY_PICS && window.FUNNY_PICS.length > 0) ? window.FUNNY_PICS : [];
-  const videos = (window.FUNNY_VIDEOS && window.FUNNY_VIDEOS.length > 0) ? window.FUNNY_VIDEOS : [];
+  function normalizeMedia(list) {
+    if (!list) return [];
+    if (typeof list === 'string') list = [list];
+    if (!Array.isArray(list)) return [];
+    return list.filter(item => typeof item === 'string' && /\.(jpe?g|png|webp|gif|mp4|webm|mov|m4v)$/i.test(item.trim()));
+  }
+
+  const photos = normalizeMedia(window.FUNNY_PICS);
+  const videos = normalizeMedia(window.FUNNY_VIDEOS);
   
   const funnyCaptions = [
     "Evidence of pure unfiltered menace 🚨",
@@ -590,6 +648,10 @@ function renderChaosPhotos(container) {
       <img src="${encodeURI(imgSrc)}" class="chaos-media-player" style="height: 220px; object-fit: cover; border-radius: 4px;" alt="Chaos Candid" loading="lazy">
       <p style="font-family: var(--font-mono); font-size: 0.75rem; color: #f87171; margin-top: 8px;">${cap}</p>
     `;
+
+    const img = card.querySelector('img');
+    if (img) img.addEventListener('error', () => card.remove());
+
     card.addEventListener('click', () => {
       openSingleMediaModal(imgSrc, 'photo', cap);
     });
@@ -607,6 +669,10 @@ function renderChaosPhotos(container) {
       </video>
       <p style="font-family: var(--font-mono); font-size: 0.75rem; color: #fbbf24; margin-top: 8px;">${cap}</p>
     `;
+
+    const vid = card.querySelector('video');
+    if (vid) vid.addEventListener('error', () => card.remove());
+
     container.appendChild(card);
   });
 }

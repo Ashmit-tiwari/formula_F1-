@@ -330,22 +330,17 @@
       </div>
 
       <div class="gallery-action-bar">
+        <button class="gallery-filter-btn active" data-filter="all">✨ All Moments</button>
+        <button class="gallery-filter-btn" data-filter="photo">📸 Photos Only</button>
+        <button class="gallery-filter-btn" data-filter="video">🎬 Live Video Reels</button>
         <label for="photo-uploader" class="gallery-btn">
-          <span>📷 Add Custom Photos</span>
-          <input type="file" id="photo-uploader" multiple accept="image/*" style="display:none;">
+          <span>📷 Add Custom Media</span>
+          <input type="file" id="photo-uploader" multiple accept="image/*,video/*" style="display:none;">
         </label>
-        <button class="gallery-btn" onclick="alert('Tip: You can also drop photos into the \'anushka cute pics\' folder on your PC!')">
-          <span>💡 Folder Sync Tip</span>
-        </button>
       </div>
 
       <div class="polaroid-grid" id="polaroid-grid">
-        <!-- Rendered dynamically by script.js with sticky notes & pins -->
-      </div>
-
-      <!-- Devi In Motion Reel -->
-      <div id="gallery-video-container" class="gallery-video-container">
-        <!-- Rendered dynamically by script.js -->
+        <!-- Rendered dynamically by script.js with verified media & interactive video players -->
       </div>
     </div>
   </section>
