@@ -1,6 +1,7 @@
 // ==========================================================================
 // ANUSHKA'S SURPRISE - BESPOKE INTERACTION CONTROLLER
-// Handles audio players, notebook tabs, lightbox modals, videos, animations & chaos
+// Handles audio players, notebook tabs, lightbox modals, video polaroids,
+// stardust cursor, scrapbook interactions & celebratory effects
 // ==========================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -419,7 +420,6 @@ function initScreenshotModal() {
 
   if (!modal) return;
 
-  // View screenshots button click handlers
   document.querySelectorAll('.view-screenshot-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const listAttr = btn.getAttribute('data-screenshots');
@@ -754,10 +754,8 @@ function formatTime(seconds) {
    9. STARDUST CURSOR TRAIL (Aesthetic Polish)
    -------------------------------------------------------------------------- */
 function initStardustCursor() {
-  if (window.innerWidth < 768) return; // Only on desktop to keep mobile performance snappy
+  if (window.innerWidth < 768) return;
 
-  let lastX = 0;
-  let lastY = 0;
   let throttle = 0;
 
   window.addEventListener('mousemove', (e) => {
@@ -793,9 +791,9 @@ function initStardustCursor() {
    10. INTERACTIVE BUTTON SOUND FX
    -------------------------------------------------------------------------- */
 function initInteractiveSoundFX() {
-  document.querySelectorAll('.rhyme-card, .dossier-card').forEach(card => {
+  document.querySelectorAll('.rhyme-card, .dossier-card, .torn-paper-card, .bg-collage-scrap').forEach(card => {
     card.addEventListener('mouseenter', () => {
-      playSoftChime(700 + Math.random() * 200, 0.05);
+      playSoftChime(650 + Math.random() * 200, 0.05);
     });
   });
 }

@@ -61,7 +61,7 @@ body {
   min-height: 100vh;
 }
 
-/* Background Ambient Glows */
+/* Background Ambient Glows & Torn Magazine Collage */
 .ambient-bg {
   position: fixed;
   inset: 0;
@@ -104,6 +104,177 @@ body {
   opacity: 0.1;
   animation-duration: 35s;
 }
+
+/* ==========================================================================
+   FULL-PAGE MAGAZINE TORN PAGE COLLAGE BACKGROUND
+   Authentic ripped paper, vintage editorial cutouts, washi tape,
+   rubber stamps, and handwritten margin quotes praising Anushka.
+   ========================================================================== */
+.page-magazine-collage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.bg-collage-scrap {
+  position: absolute;
+  background: #fdfbf7;
+  color: #1c1917;
+  padding: 24px 22px 20px;
+  border-radius: 2px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.35);
+  transform: rotate(var(--scrap-rot, 0deg));
+  transition: var(--transition-bounce);
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 2;
+  user-select: none;
+  clip-path: polygon(
+    0% 1.5%, 3% 0%, 7% 1.8%, 12% 0.2%, 18% 1.5%, 24% 0%, 30% 1.6%, 36% 0.4%, 42% 1.5%, 48% 0%, 54% 1.7%, 60% 0.2%, 66% 1.6%, 72% 0%, 78% 1.5%, 84% 0.3%, 90% 1.8%, 95% 0%, 100% 1.2%,
+    100% 98.5%, 96% 100%, 92% 98.2%, 86% 99.8%, 80% 98.4%, 74% 100%, 68% 98.3%, 62% 99.9%, 56% 98.2%, 50% 100%, 44% 98.4%, 38% 99.8%, 32% 98.2%, 26% 100%, 20% 98.5%, 14% 100%, 8% 98.2%, 3% 100%, 0% 98.5%
+  );
+}
+
+.bg-collage-scrap:nth-child(even) {
+  background: #fffdf5;
+  clip-path: polygon(
+    0% 0.5%, 4% 1.8%, 9% 0.2%, 15% 1.6%, 22% 0%, 28% 1.7%, 35% 0.3%, 41% 1.5%, 47% 0.1%, 53% 1.8%, 60% 0%, 67% 1.6%, 73% 0.2%, 80% 1.7%, 86% 0.1%, 92% 1.8%, 97% 0.2%, 100% 1.5%,
+    100% 99%, 95% 98.1%, 89% 100%, 82% 98.3%, 76% 99.8%, 69% 98.2%, 63% 100%, 57% 98.4%, 51% 99.9%, 45% 98.1%, 39% 100%, 33% 98.3%, 27% 99.8%, 21% 98.2%, 15% 100%, 9% 98.3%, 4% 99.9%, 0% 98.2%
+  );
+}
+
+.bg-collage-scrap:hover {
+  transform: scale(1.08) rotate(0deg) !important;
+  z-index: 50;
+  box-shadow: 0 28px 65px rgba(0, 0, 0, 0.85), 0 0 35px rgba(244, 63, 94, 0.35);
+}
+
+.scrap-meta {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #78716c;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.scrap-head {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.scrap-body {
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  color: #334155;
+  line-height: 1.55;
+  margin-bottom: 12px;
+}
+
+.scrap-clip, .torn-clip {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 1.25rem;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.25));
+  opacity: 0.9;
+}
+
+/* Washi Tape Strips with Ripped Serrated Zigzag Ends */
+.washi-tape, .card-washi-tape {
+  position: absolute;
+  top: -12px;
+  left: 20%;
+  width: 90px;
+  height: 24px;
+  background: rgba(254, 240, 138, 0.88);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+  clip-path: polygon(0 0, 100% 0, 96% 50%, 100% 100%, 0 100%, 4% 50%);
+  border-left: 2px dashed rgba(0, 0, 0, 0.15);
+  border-right: 2px dashed rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  transform: rotate(-2deg);
+}
+
+.tape-yellow, .washi-yellow { background: rgba(254, 240, 138, 0.88); }
+.tape-pink, .washi-pink     { background: rgba(254, 205, 211, 0.88); }
+.tape-mint, .washi-mint     { background: rgba(167, 243, 208, 0.88); }
+.tape-lavender, .washi-lavender { background: rgba(233, 213, 255, 0.88); }
+.tape-peach, .washi-peach   { background: rgba(254, 215, 170, 0.88); }
+.tape-blue, .washi-blue     { background: rgba(186, 230, 253, 0.88); }
+
+/* Rubber Ink Stamps */
+.scrap-stamp, .torn-stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 3px 8px;
+  border-radius: 3px;
+  transform: rotate(-3deg);
+  user-select: none;
+}
+
+.stamp-rose, .stamp-mini-rose {
+  border: 1.5px solid #be123c;
+  color: #be123c;
+  background: rgba(190, 18, 60, 0.06);
+}
+
+.stamp-purple, .stamp-mini-purple {
+  border: 1.5px solid #7c3aed;
+  color: #7c3aed;
+  background: rgba(124, 58, 237, 0.06);
+}
+
+.stamp-gold, .stamp-mini-gold {
+  border: 1.5px solid #b45309;
+  color: #b45309;
+  background: rgba(180, 83, 9, 0.06);
+}
+
+.stamp-teal, .stamp-mini-teal {
+  border: 1.5px solid #0f766e;
+  color: #0f766e;
+  background: rgba(15, 118, 110, 0.06);
+}
+
+/* Handwritten Margin Scribbles */
+.scrap-handwritten, .torn-handwritten {
+  font-family: 'Caveat', 'Kalam', cursive;
+  font-size: 1.15rem;
+  color: #e11d48;
+  line-height: 1.25;
+  margin-top: 8px;
+  transform: rotate(-1.5deg);
+}
+
+/* Scrap Positioning along Full Scroll Height */
+.scrap-intro-left     { top: 1.5%; left: 1.8%; width: 290px; --scrap-rot: -3.5deg; }
+.scrap-intro-right    { top: 5.5%; right: 1.8%; width: 280px; --scrap-rot: 3deg; }
+.scrap-obs-left       { top: 13%; left: 1.5%; width: 300px; --scrap-rot: -2deg; }
+.scrap-gallery-right  { top: 21%; right: 1.8%; width: 290px; --scrap-rot: 2.8deg; }
+.scrap-gallery-left   { top: 29%; left: 1.5%; width: 310px; --scrap-rot: -3deg; }
+.scrap-mag-right      { top: 38%; right: 1.8%; width: 295px; --scrap-rot: 2.2deg; }
+.scrap-scrapbook-left { top: 48%; left: 1.5%; width: 305px; --scrap-rot: -2.5deg; }
+.scrap-rhymes-right   { top: 59%; right: 1.8%; width: 290px; --scrap-rot: 3.2deg; }
+.scrap-notebook-left  { top: 70%; left: 1.5%; width: 310px; --scrap-rot: -2.8deg; }
+.scrap-audio-right    { top: 83%; right: 1.8%; width: 295px; --scrap-rot: 2.5deg; }
+.scrap-rap-left       { top: 92%; left: 1.8%; width: 300px; --scrap-rot: -2.2deg; }
 
 @keyframes floatOrb {
   0% { transform: translate(0, 0) scale(1); }
@@ -335,7 +506,8 @@ section {
    PHASE 2: "THINGS YOU PROBABLY DON'T NOTICE"
    ========================================================================== */
 #observations {
-  background: linear-gradient(180deg, var(--bg-primary) 0%, #0d0d12 100%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(20, 18, 28, 0.72) 0%, rgba(10, 10, 14, 0.88) 100%);
+  backdrop-filter: blur(8px);
 }
 
 .section-header {
@@ -485,7 +657,8 @@ section {
    PHASE 3: THE PHOTO DISCOVERY (POLAROIDS & ANNOTATIONS)
    ========================================================================== */
 #gallery {
-  background: #09090b;
+  background: radial-gradient(ellipse at 50% 20%, rgba(18, 16, 24, 0.7) 0%, rgba(9, 9, 12, 0.86) 100%);
+  backdrop-filter: blur(8px);
   position: relative;
 }
 
@@ -573,164 +746,11 @@ section {
   position: relative;
 }
 
-.polaroid-img-wrapper img,
-.polaroid-img-wrapper video {
+.polaroid-img-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.6s ease;
-}
-
-/* Gallery Filter Tabs */
-.gallery-filters {
-  display: flex;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-glass);
-  padding: 4px;
-  border-radius: 40px;
-  backdrop-filter: blur(10px);
-}
-
-.gallery-filter-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-family: var(--font-sans);
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-}
-
-.gallery-filter-btn:hover {
-  color: #fff;
-}
-
-.gallery-filter-btn.active {
-  background: var(--accent-rose);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
-}
-
-/* Video Polaroid Enhancements */
-.polaroid-card.is-video .polaroid-img-wrapper::after {
-  content: '▶';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 52px;
-  height: 52px;
-  background: rgba(244, 63, 94, 0.9);
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  padding-left: 4px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-rose);
-  transition: transform 0.3s ease, background 0.3s ease;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.polaroid-card.is-video:hover .polaroid-img-wrapper::after {
-  transform: translate(-50%, -50%) scale(1.15);
-  background: #e11d48;
-}
-
-.video-time-tag {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(4px);
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 5;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.video-pulse-dot {
-  width: 6px;
-  height: 6px;
-  background: #ef4444;
-  border-radius: 50%;
-  animation: pulseDot 1s infinite alternate;
-}
-
-@keyframes pulseDot {
-  from { opacity: 0.3; }
-  to { opacity: 1; }
-}
-
-/* Holographic shine sweep on hover */
-.polaroid-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 20%,
-    rgba(255, 255, 255, 0.25) 45%,
-    rgba(255, 255, 255, 0.4) 50%,
-    rgba(255, 255, 255, 0.25) 55%,
-    transparent 80%
-  );
-  transform: translateX(-100%);
-  transition: transform 0.75s ease-in-out;
-  pointer-events: none;
-  border-radius: 4px;
-}
-
-.polaroid-card:hover::after {
-  transform: translateX(100%);
-}
-
-/* Notebook Screenshot Thumbnail Strip */
-.notebook-screenshot-strip {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 14px 4px 6px;
-  margin-top: 18px;
-  border-top: 1px dashed #cbd5e1;
-  scrollbar-width: thin;
-}
-
-.notebook-screenshot-thumb {
-  width: 72px;
-  height: 96px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 2px solid #e2e8f0;
-  cursor: pointer;
-  position: relative;
-  transition: transform 0.2s ease, border-color 0.2s ease;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-.notebook-screenshot-thumb:hover {
-  transform: scale(1.08) translateY(-4px);
-  border-color: var(--accent-rose);
-  box-shadow: 0 6px 15px rgba(244, 63, 94, 0.3);
-}
-
-.notebook-screenshot-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .polaroid-card:hover .polaroid-img-wrapper img {
@@ -811,7 +831,8 @@ section {
    PHASE 4: MAGAZINE PERSONALITY REPORT
    ========================================================================== */
 #magazine {
-  background: linear-gradient(180deg, #09090b 0%, #111116 100%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(22, 18, 28, 0.72) 0%, rgba(10, 10, 14, 0.88) 100%);
+  backdrop-filter: blur(8px);
 }
 
 .magazine-frame {
@@ -946,10 +967,150 @@ section {
 }
 
 /* ==========================================================================
+   TORN MAGAZINE PAGE SCRAPBOOK WALL (QUOTES & BESTIE PRAISE)
+   ========================================================================== */
+#scrapbook-wall {
+  background: radial-gradient(circle at center, rgba(22, 16, 26, 0.78) 0%, rgba(10, 10, 14, 0.92) 100%);
+  backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0;
+}
+
+.scrapbook-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 36px;
+  perspective: 1200px;
+}
+
+.torn-paper-card {
+  position: relative;
+  background: #fdfbf7;
+  color: #1c1917;
+  padding: 38px 30px 26px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.6), 0 3px 10px rgba(0, 0, 0, 0.4);
+  transform: rotate(var(--paper-rot, 0deg));
+  transition: var(--transition-bounce);
+  cursor: pointer;
+  border-radius: 2px;
+  user-select: none;
+  clip-path: polygon(
+    0% 1.5%, 3% 0%, 7% 1.8%, 12% 0.2%, 18% 1.5%, 24% 0%, 30% 1.6%, 36% 0.4%, 42% 1.5%, 48% 0%, 54% 1.7%, 60% 0.2%, 66% 1.6%, 72% 0%, 78% 1.5%, 84% 0.3%, 90% 1.8%, 95% 0%, 100% 1.2%,
+    100% 98.5%, 96% 100%, 92% 98.2%, 86% 99.8%, 80% 98.4%, 74% 100%, 68% 98.3%, 62% 99.9%, 56% 98.2%, 50% 100%, 44% 98.4%, 38% 99.8%, 32% 98.2%, 26% 100%, 20% 98.5%, 14% 100%, 8% 98.2%, 3% 100%, 0% 98.5%
+  );
+}
+
+.torn-paper-card:nth-child(even) {
+  clip-path: polygon(
+    0% 0.5%, 4% 1.8%, 9% 0.2%, 15% 1.6%, 22% 0%, 28% 1.7%, 35% 0.3%, 41% 1.5%, 47% 0.1%, 53% 1.8%, 60% 0%, 67% 1.6%, 73% 0.2%, 80% 1.7%, 86% 0.1%, 92% 1.8%, 97% 0.2%, 100% 1.5%,
+    100% 99%, 95% 98.1%, 89% 100%, 82% 98.3%, 76% 99.8%, 69% 98.2%, 63% 100%, 57% 98.4%, 51% 99.9%, 45% 98.1%, 39% 100%, 33% 98.3%, 27% 99.8%, 21% 98.2%, 15% 100%, 9% 98.3%, 4% 99.9%, 0% 98.2%
+  );
+}
+
+.torn-paper-card:hover {
+  transform: scale(1.05) rotate(0deg) !important;
+  z-index: 25;
+  box-shadow: 0 28px 65px rgba(0, 0, 0, 0.85), 0 0 35px rgba(244, 63, 94, 0.3);
+}
+
+.torn-paper-card:nth-child(1) { --paper-rot: -2.2deg; background: #fffdf5; }
+.torn-paper-card:nth-child(2) { --paper-rot: 2.4deg; background: #fff1f2; }
+.torn-paper-card:nth-child(3) { --paper-rot: -2.8deg; background: #faf5ff; }
+.torn-paper-card:nth-child(4) { --paper-rot: 1.8deg; background: #f0f9ff; }
+.torn-paper-card:nth-child(5) { --paper-rot: -2.5deg; background: #fefce8; }
+.torn-paper-card:nth-child(6) { --paper-rot: 2.6deg; background: #f0fdf4; }
+.torn-paper-card:nth-child(7) { --paper-rot: -1.9deg; background: #fffbeb; }
+.torn-paper-card:nth-child(8) { --paper-rot: 2.2deg; background: #fdf2f8; }
+
+.torn-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.torn-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #be123c;
+}
+
+.torn-issue {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #78716c;
+}
+
+.torn-quote-title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.torn-quote-body {
+  font-family: 'Kalam', 'Caveat', cursive;
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: #334155;
+  margin-bottom: 14px;
+}
+
+/* Paper Highlighter Marker Effects */
+.paper-highlight {
+  background: linear-gradient(100deg, rgba(254, 240, 138, 0) 1%, rgba(254, 240, 138, 0.6) 3%, rgba(254, 240, 138, 0.52) 96%, rgba(254, 240, 138, 0) 99%);
+  color: inherit;
+  padding: 1px 4px;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.paper-highlight.pink {
+  background: linear-gradient(100deg, rgba(254, 205, 211, 0) 1%, rgba(254, 205, 211, 0.65) 3%, rgba(254, 205, 211, 0.55) 96%, rgba(254, 205, 211, 0) 99%);
+}
+
+.paper-highlight.mint {
+  background: linear-gradient(100deg, rgba(167, 243, 208, 0) 1%, rgba(167, 243, 208, 0.65) 3%, rgba(167, 243, 208, 0.55) 96%, rgba(167, 243, 208, 0) 99%);
+}
+
+.paper-highlight.blue {
+  background: linear-gradient(100deg, rgba(186, 230, 253, 0) 1%, rgba(186, 230, 253, 0.65) 3%, rgba(186, 230, 253, 0.55) 96%, rgba(186, 230, 253, 0) 99%);
+}
+
+.torn-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed rgba(0, 0, 0, 0.12);
+  padding-top: 12px;
+  margin-top: 14px;
+}
+
+.torn-quote-author {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
    PHASE 5: DESI RHYMES
    ========================================================================== */
 #rhymes {
-  background: radial-gradient(circle at center, #171720 0%, var(--bg-primary) 100%);
+  background: radial-gradient(circle at center, rgba(22, 18, 30, 0.72) 0%, rgba(10, 10, 14, 0.88) 100%);
+  backdrop-filter: blur(8px);
 }
 
 .rhymes-grid {
@@ -1000,7 +1161,8 @@ section {
    PHASE 6: FRIENDS' NOTEBOOK
    ========================================================================== */
 #notebook {
-  background: #08080a;
+  background: radial-gradient(ellipse at center, rgba(18, 16, 24, 0.74) 0%, rgba(8, 8, 10, 0.9) 100%);
+  backdrop-filter: blur(8px);
   position: relative;
 }
 
@@ -1325,7 +1487,8 @@ section {
    PHASE 8: ASHMIT'S AUDIO MESSAGE
    ========================================================================== */
 #audio {
-  background: #08080a;
+  background: radial-gradient(ellipse at center, rgba(16, 14, 20, 0.75) 0%, rgba(8, 8, 10, 0.9) 100%);
+  backdrop-filter: blur(8px);
 }
 
 .minimal-audio-container {
@@ -1471,7 +1634,8 @@ section {
    PHASE 9: RAP (THE EMOTIONAL CLIMAX)
    ========================================================================== */
 #rap {
-  background: radial-gradient(circle at center, #1b0a1a 0%, #08080a 100%);
+  background: radial-gradient(circle at center, rgba(30, 14, 30, 0.78) 0%, rgba(8, 8, 10, 0.92) 100%);
+  backdrop-filter: blur(8px);
   position: relative;
 }
 
@@ -1618,7 +1782,8 @@ section {
    PHASE 10: THE OUTRO
    ========================================================================== */
 #outro {
-  background: #060608;
+  background: radial-gradient(ellipse at center, rgba(18, 12, 22, 0.75) 0%, rgba(6, 6, 8, 0.92) 100%);
+  backdrop-filter: blur(8px);
   text-align: center;
   min-height: 100vh;
   display: flex;
@@ -1779,3 +1944,21 @@ section {
   font-size: 0.85rem;
   color: var(--text-muted);
 }
+
+/* Responsive adjustments for background magazine collage */
+@media (max-width: 1280px) {
+  .bg-collage-scrap {
+    width: 250px !important;
+    padding: 18px 16px 14px;
+    opacity: 0.85;
+  }
+  .scrap-head { font-size: 1.1rem; }
+  .scrap-body { font-size: 0.8rem; }
+}
+
+@media (max-width: 1024px) {
+  .page-magazine-collage {
+    display: none; /* Hide background side floating collage on tablets/mobile to ensure clean touch layout */
+  }
+}
+
