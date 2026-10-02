@@ -5,10 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite --open --host",
-    "build": "vite build",
+    "build": "vite build && node copy-assets.js",
     "preview": "vite preview"
   },
   "devDependencies": {
     "vite": "^6.0.0"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "esbuild@0.25.12": true
   }
 }
